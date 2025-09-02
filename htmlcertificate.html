@@ -32,7 +32,7 @@
         }
         .certificate-border {
             border: 2px solid #1d4ed8;
-            background: linear-gradient(45deg, #dbeafe, #eff6ff);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #bae6fd 50%, #7dd3fc 75%, #38bdf8 100%);
         }
         .timer {
             position: fixed;
@@ -82,6 +82,26 @@
             0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
             25% { transform: translate(-50%, -50%) rotate(-2deg); }
             75% { transform: translate(-50%, -50%) rotate(2deg); }
+        }
+        .certificate-mobile {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #bae6fd 50%, #7dd3fc 75%, #38bdf8 100%);
+            border: 4px solid #0369a1;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .decorative-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        @media (max-width: 768px) {
+            .decorative-corner {
+                width: 20px;
+                height: 20px;
+            }
         }
     </style>
 </head>
@@ -273,123 +293,81 @@
     </div>
 
     <!-- Certificate Section -->
-    <div id="certificateSection" class="hidden min-h-screen flex items-center justify-center p-4 sm:p-6">
-        <div class="certificate rounded-2xl p-4 sm:p-8 w-full max-w-7xl text-center mx-auto" style="aspect-ratio: 16/9;">
-            <div class="certificate-border rounded-xl p-4 sm:p-8 relative overflow-hidden h-full flex flex-col justify-between" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #bae6fd 50%, #7dd3fc 75%, #38bdf8 100%); border: 6px solid #0369a1; box-shadow: inset 0 0 50px rgba(3, 105, 161, 0.1);"
-                <!-- Decorative elements -->
-                <div class="absolute top-4 left-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
-                <div class="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
-                <div class="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
-                <div class="absolute bottom-4 right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
-                
-                <!-- Decorative border pattern -->
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
-                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
-                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
-                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
-                
-                <!-- Certificate Header -->
-                <div class="relative z-10">
-                    <div class="flex justify-center items-center mb-3">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center mr-3 shadow-lg">
-                            <span class="text-white text-xl font-bold">🎓</span>
-                        </div>
-                        <h1 class="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent">JSIIT</h1>
+    <div id="certificateSection" class="hidden min-h-screen flex items-center justify-center p-2 sm:p-6">
+        <div class="certificate-mobile w-full max-w-4xl mx-auto p-4 sm:p-8 relative overflow-hidden">
+            <!-- Decorative corners -->
+            <div class="decorative-corner top-2 left-2"></div>
+            <div class="decorative-corner top-2 right-2"></div>
+            <div class="decorative-corner bottom-2 left-2"></div>
+            <div class="decorative-corner bottom-2 right-2"></div>
+            
+            <!-- Decorative border patterns -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 sm:w-32 h-1 sm:h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 sm:w-32 h-1 sm:h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 sm:w-2 h-20 sm:h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
+            <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-1 sm:w-2 h-20 sm:h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
+            
+            <!-- Certificate Header -->
+            <div class="text-center mb-4 sm:mb-6 relative z-10">
+                <div class="flex justify-center items-center mb-2 sm:mb-3">
+                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center mr-2 sm:mr-3 shadow-lg">
+                        <span class="text-white text-sm sm:text-xl font-bold">🎓</span>
                     </div>
-                    <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-3"></div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-1">Certificate of Completion</h2>
-                    <p class="text-xs text-gray-500 uppercase tracking-wider">HTML Basic Course</p>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent">JSIIT</h1>
                 </div>
-                
-                <!-- Certificate Body -->
-                <div class="relative z-10 flex-1 flex flex-col justify-center px-4">
-                    <p class="text-base sm:text-lg text-gray-600 mb-4 italic">This is to certify that</p>
-                    <div class="bg-white bg-opacity-80 p-4 rounded-lg mb-4 shadow-lg border border-blue-200">
-                        <h3 id="certStudentName" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2"></h3>
-                        <p id="certFatherName" class="text-base sm:text-lg text-gray-600"></p>
-                    </div>
-                    <p class="text-sm sm:text-base text-gray-700 leading-relaxed max-w-4xl mx-auto">
-                        has successfully completed the <strong>HTML Basic Course</strong> and demonstrated proficiency in fundamental web development concepts through comprehensive assessment.
-                    </p>
+                <div class="w-16 sm:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-2 sm:mb-3"></div>
+                <h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-700 mb-1">Certificate of Completion</h2>
+                <p class="text-xs sm:text-sm text-gray-500 uppercase tracking-wider">HTML Basic Course</p>
+            </div>
+            
+            <!-- Certificate Body -->
+            <div class="text-center mb-4 sm:mb-6 relative z-10">
+                <p class="text-sm sm:text-base lg:text-lg text-gray-600 mb-3 sm:mb-4 italic">This is to certify that</p>
+                <div class="bg-white bg-opacity-90 p-3 sm:p-4 rounded-lg mb-3 sm:mb-4 shadow-lg border border-blue-200 mx-auto max-w-md sm:max-w-lg">
+                    <h3 id="certStudentName" class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-1 sm:mb-2 break-words"></h3>
+                    <p id="certFatherName" class="text-sm sm:text-base lg:text-lg text-gray-600 break-words"></p>
                 </div>
+                <p class="text-xs sm:text-sm lg:text-base text-gray-700 leading-relaxed px-2 sm:px-4">
+                    has successfully completed the <strong>HTML Basic Course</strong> and demonstrated proficiency in fundamental web development concepts through comprehensive assessment.
+                </p>
+            </div>
 
-                <!-- Certificate Footer -->
-                <div class="relative z-10">
-                    <div class="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-blue-300">
-                        <div class="text-center mb-2 sm:mb-0">
-                            <p class="text-lg font-bold text-gray-800">JSIIT</p>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-sm text-gray-600 font-medium">Date of Completion</p>
-                            <p id="certDate" class="text-base font-bold text-gray-800"></p>
-                        </div>
+            <!-- Certificate Footer -->
+            <div class="relative z-10 border-t border-blue-300 pt-3 sm:pt-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-3 sm:mb-4 space-y-2 sm:space-y-0">
+                    <div class="text-center">
+                        <p class="text-base sm:text-lg font-bold text-gray-800">JSIIT</p>
                     </div>
-
-                    <!-- Certificate ID and Website -->
-                    <div class="mt-3 text-center">
-                        <p class="text-xs text-gray-500">Certificate ID: <span id="certId" class="font-mono"></span></p>
-                        <p class="text-sm text-blue-600 mt-2 font-medium">https://jsiit.eshwarkingrani.com</p>
-                        <p class="text-xs text-gray-400 mt-2 italic">This is computerized certificate, signature not needed</p>
+                    <div class="text-center">
+                        <p class="text-xs sm:text-sm text-gray-600 font-medium">Date of Completion</p>
+                        <p id="certDate" class="text-sm sm:text-base font-bold text-gray-800"></p>
                     </div>
                 </div>
 
-                <!-- Download Options -->
-                <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <!-- Certificate ID and Website -->
+                <div class="text-center mb-4 sm:mb-6">
+                    <p class="text-xs text-gray-500 mb-1">Certificate ID: <span id="certId" class="font-mono"></span></p>
+                    <p class="text-sm sm:text-base text-blue-600 font-bold mb-2">https://jsiit.eshwarkingrani.com</p>
+                    <p class="text-xs text-gray-400 italic">This is computerized certificate, signature not needed</p>
+                </div>
+
+                <!-- Download Button -->
+                <div class="flex flex-col gap-3 justify-center">
                     <button 
-                        onclick="showDownloadOptions()"
-                        class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                        onclick="downloadCertificate('jpeg')"
+                        class="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-xl transition duration-200 transform hover:scale-105 shadow-xl text-base sm:text-lg flex items-center justify-center"
                     >
-                        📥 Download Certificate
+                        <span class="text-2xl mr-3">📥</span>
+                        Download Certificate
                     </button>
                     <button 
                         onclick="goHome()"
-                        class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 text-sm sm:text-base"
+                        class="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 text-sm sm:text-base"
                     >
                         🏠 Go Home
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Download Options Modal -->
-    <div id="downloadModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-md mx-auto">
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Choose Download Format</h3>
-                <p class="text-gray-600">Select your preferred format to download the certificate</p>
-            </div>
-            
-            <div class="space-y-4">
-                <button 
-                    onclick="downloadCertificate('pdf')"
-                    class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center"
-                >
-                    <span class="text-2xl mr-3">📄</span>
-                    <div class="text-left">
-                        <div class="font-bold">PDF Format</div>
-                        <div class="text-sm opacity-90">Best for printing and official use</div>
-                    </div>
-                </button>
-                
-                <button 
-                    onclick="downloadCertificate('jpeg')"
-                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center"
-                >
-                    <span class="text-2xl mr-3">🖼️</span>
-                    <div class="text-left">
-                        <div class="font-bold">JPEG Format</div>
-                        <div class="text-sm opacity-90">Perfect for sharing on social media</div>
-                    </div>
-                </button>
-            </div>
-            
-            <button 
-                onclick="closeDownloadModal()"
-                class="w-full mt-6 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
-            >
-                Cancel
-            </button>
         </div>
     </div>
 
@@ -803,6 +781,9 @@
             document.getElementById('testSection').classList.add('hidden');
             document.getElementById('resultSection').classList.remove('hidden');
             
+            // Re-enable developer tools and tab switching for result page
+            enableDeveloperTools();
+            
             const resultContent = document.getElementById('resultContent');
             const isPassed = score >= 15;
             
@@ -821,7 +802,7 @@
                                 onclick="showCertificate()"
                                 class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 sm:px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
                             >
-                                Download Certificate
+                                View Certificate
                             </button>
                             <button 
                                 onclick="goHome()"
@@ -856,6 +837,14 @@
             }
         }
 
+        function enableDeveloperTools() {
+            // Remove all event listeners that were blocking developer tools
+            document.body.style.userSelect = 'auto';
+            document.body.style.webkitUserSelect = 'auto';
+            document.body.style.mozUserSelect = 'auto';
+            document.body.style.msUserSelect = 'auto';
+        }
+
         function showCertificate() {
             document.getElementById('resultSection').classList.add('hidden');
             document.getElementById('certificateSection').classList.remove('hidden');
@@ -870,169 +859,118 @@
             document.getElementById('certId').textContent = certId;
         }
 
-        function showDownloadOptions() {
-            document.getElementById('downloadModal').classList.remove('hidden');
-        }
-
-        function closeDownloadModal() {
-            document.getElementById('downloadModal').classList.add('hidden');
-        }
-
         function downloadCertificate(format) {
-            closeDownloadModal();
-            
-            if (format === 'pdf') {
-                // Generate PDF certificate
-                generatePDFCertificate();
-            } else if (format === 'jpeg') {
-                // Generate JPEG certificate
-                generateJPEGCertificate();
-            }
-        }
-
-        function generatePDFCertificate() {
-            // Create a new window with certificate content for PDF generation
-            const certificateContent = document.querySelector('#certificateSection .certificate-border').cloneNode(true);
-            
-            // Create a new window for PDF generation
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>JSIIT Certificate - ${studentInfo.studentName}</title>
-                    <style>
-                        body { 
-                            font-family: 'Arial', sans-serif; 
-                            margin: 0; 
-                            padding: 20px;
-                            background: white;
-                        }
-                        .certificate-border {
-                            max-width: 800px;
-                            margin: 0 auto;
-                            padding: 40px;
-                            border: 4px solid #2563eb;
-                            border-radius: 12px;
-                            background: linear-gradient(45deg, #dbeafe, #eff6ff);
-                            position: relative;
-                        }
-                        .absolute { position: absolute; }
-                        .top-0 { top: 0; }
-                        .left-0 { left: 0; }
-                        .right-0 { right: 0; }
-                        .bottom-0 { bottom: 0; }
-                        .w-20 { width: 80px; }
-                        .h-20 { height: 80px; }
-                        .border-l-4 { border-left: 4px solid #2563eb; }
-                        .border-r-4 { border-right: 4px solid #2563eb; }
-                        .border-t-4 { border-top: 4px solid #2563eb; }
-                        .border-b-4 { border-bottom: 4px solid #2563eb; }
-                        h1 { color: #1e40af; font-size: 48px; margin: 0; }
-                        h2 { color: #374151; font-size: 24px; margin: 10px 0; }
-                        h3 { color: #1f2937; font-size: 32px; margin: 10px 0; }
-                        .text-center { text-align: center; }
-                        .mb-4 { margin-bottom: 16px; }
-                        .mb-6 { margin-bottom: 24px; }
-                        .mb-8 { margin-bottom: 32px; }
-                        .mt-12 { margin-top: 48px; }
-                        .pt-6 { padding-top: 24px; }
-                        .px-4 { padding-left: 16px; padding-right: 16px; }
-                        .border-t-2 { border-top: 2px solid #e5e7eb; }
-                        .flex { display: flex; }
-                        .justify-between { justify-content: space-between; }
-                        .items-center { align-items: center; }
-                        @media print {
-                            body { margin: 0; }
-                            .certificate-border { border: 4px solid #2563eb !important; }
-                        }
-                    </style>
-                </head>
-                <body>
-                    ${certificateContent.outerHTML}
-                </body>
-                </html>
-            `);
-            
-            printWindow.document.close();
-            
-            // Wait for content to load then trigger print
-            setTimeout(() => {
-                printWindow.print();
-                printWindow.close();
-            }, 1000);
-            
-            // Show success message
-            setTimeout(() => {
-                alert(`📄 PDF Certificate generated successfully!\n\nCertificate for: ${studentInfo.studentName}\nFormat: PDF\n\nThe print dialog has opened. You can save as PDF or print directly.`);
-            }, 500);
-        }
-
-        function generateJPEGCertificate() {
-            // Use html2canvas library simulation for JPEG generation
-            const certificateElement = document.querySelector('#certificateSection .certificate-border');
-            
-            // Create a canvas element
+            // Create a canvas element for high-quality certificate
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // Set canvas size
+            // Set high resolution canvas size (1200x800 for good quality)
             canvas.width = 1200;
             canvas.height = 800;
             
-            // Fill background
-            ctx.fillStyle = '#ffffff';
+            // Create beautiful gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#f0f9ff');
+            gradient.addColorStop(0.25, '#e0f2fe');
+            gradient.addColorStop(0.5, '#bae6fd');
+            gradient.addColorStop(0.75, '#7dd3fc');
+            gradient.addColorStop(1, '#38bdf8');
+            
+            ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Add border
-            ctx.strokeStyle = '#2563eb';
+            // Add decorative border
+            ctx.strokeStyle = '#0369a1';
             ctx.lineWidth = 8;
             ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
             
-            // Add text content
-            ctx.fillStyle = '#1e40af';
-            ctx.font = 'bold 60px Arial';
+            // Add decorative corners
+            ctx.fillStyle = 'rgba(251, 191, 36, 0.3)';
+            ctx.beginPath();
+            ctx.arc(60, 60, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(canvas.width - 60, 60, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(60, canvas.height - 60, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(canvas.width - 60, canvas.height - 60, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Add decorative lines
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 80, 30);
+            ctx.lineTo(canvas.width/2 + 80, 30);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 80, canvas.height - 30);
+            ctx.lineTo(canvas.width/2 + 80, canvas.height - 30);
+            ctx.stroke();
+            
+            // Add certificate content
             ctx.textAlign = 'center';
-            ctx.fillText('JSIIT', canvas.width / 2, 120);
+            
+            // Title
+            ctx.fillStyle = '#1e40af';
+            ctx.font = 'bold 64px Arial';
+            ctx.fillText('🎓 JSIIT', canvas.width / 2, 120);
             
             ctx.fillStyle = '#374151';
-            ctx.font = 'bold 32px Arial';
+            ctx.font = 'bold 36px Arial';
             ctx.fillText('Certificate of Completion', canvas.width / 2, 180);
             
             ctx.fillStyle = '#6b7280';
-            ctx.font = '20px Arial';
-            ctx.fillText('HTML Basic Course', canvas.width / 2, 210);
-            
-            ctx.fillStyle = '#4b5563';
             ctx.font = '24px Arial';
-            ctx.fillText('This is to certify that', canvas.width / 2, 280);
+            ctx.fillText('HTML Basic Course', canvas.width / 2, 220);
+            
+            // Main content
+            ctx.fillStyle = '#4b5563';
+            ctx.font = '28px Arial';
+            ctx.fillText('This is to certify that', canvas.width / 2, 300);
+            
+            // Student name in a box
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(canvas.width/2 - 250, 320, 500, 80);
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(canvas.width/2 - 250, 320, 500, 80);
             
             ctx.fillStyle = '#1f2937';
-            ctx.font = 'bold 40px Arial';
-            ctx.fillText(studentInfo.studentName, canvas.width / 2, 340);
+            ctx.font = 'bold 42px Arial';
+            ctx.fillText(studentInfo.studentName, canvas.width / 2, 355);
             
             ctx.fillStyle = '#6b7280';
-            ctx.font = '24px Arial';
-            ctx.fillText(`S/O ${studentInfo.fatherName}`, canvas.width / 2, 380);
+            ctx.font = '28px Arial';
+            ctx.fillText(`S/O ${studentInfo.fatherName}`, canvas.width / 2, 385);
             
+            // Description
             ctx.fillStyle = '#374151';
-            ctx.font = '22px Arial';
-            const text = 'has successfully completed the HTML Basic Course and demonstrated';
-            ctx.fillText(text, canvas.width / 2, 450);
-            ctx.fillText('proficiency in fundamental web development concepts', canvas.width / 2, 480);
+            ctx.font = '24px Arial';
+            ctx.fillText('has successfully completed the HTML Basic Course and demonstrated', canvas.width / 2, 460);
+            ctx.fillText('proficiency in fundamental web development concepts through comprehensive assessment.', canvas.width / 2, 490);
             
+            // Footer
             ctx.fillStyle = '#6b7280';
-            ctx.font = '18px Arial';
-            ctx.fillText('Date: ' + new Date().toLocaleDateString(), canvas.width - 200, canvas.height - 100);
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('JSIIT Team', 150, canvas.height - 120);
             
-            ctx.fillText('JSIIT Team', 200, canvas.height - 100);
+            ctx.textAlign = 'right';
+            ctx.fillText('Date: ' + new Date().toLocaleDateString(), canvas.width - 150, canvas.height - 120);
             
+            // Website and certificate info
+            ctx.textAlign = 'center';
             ctx.fillStyle = '#2563eb';
-            ctx.font = 'bold 18px Arial';
-            ctx.fillText('https://jsiit.eshwarkingrani.com', canvas.width / 2, canvas.height - 60);
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('https://jsiit.eshwarkingrani.com', canvas.width / 2, canvas.height - 80);
             
             ctx.fillStyle = '#9ca3af';
-            ctx.font = '14px Arial';
+            ctx.font = '16px Arial';
+            ctx.fillText('Certificate ID: JSIIT-' + Date.now().toString().slice(-8) + '-HTML', canvas.width / 2, canvas.height - 50);
             ctx.fillText('This is computerized certificate, signature not needed', canvas.width / 2, canvas.height - 30);
             
             // Convert canvas to blob and download
@@ -1047,8 +985,8 @@
                 URL.revokeObjectURL(url);
                 
                 // Show success message
-                alert(`🖼️ JPEG Certificate downloaded successfully!\n\nCertificate for: ${studentInfo.studentName}\nFormat: JPEG Image\nFile saved to your Downloads folder.`);
-            }, 'image/jpeg', 0.9);
+                alert(`🎉 Certificate downloaded successfully!\n\nStudent: ${studentInfo.studentName}\nFormat: High Quality JPEG\nSaved to Downloads folder`);
+            }, 'image/jpeg', 0.95);
         }
 
         function goHome() {
@@ -1080,7 +1018,14 @@
             if (existingWarning) {
                 existingWarning.remove();
             }
+            
+            // Reset user selection restrictions
+            document.body.style.userSelect = '';
+            document.body.style.webkitUserSelect = '';
+            document.body.style.mozUserSelect = '';
+            document.body.style.msUserSelect = '';
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978f6b2134e49075',t:'MTc1Njg0MTM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978f868025eb9075',t:'MTc1Njg0MjUxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
