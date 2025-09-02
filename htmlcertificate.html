@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSIIT Free Certificate Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .certificate {
+            background: linear-gradient(45deg, #f8f9fa, #ffffff);
+            border: 4px solid #2563eb;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+        }
+        .certificate-border {
+            border: 2px solid #1d4ed8;
+            background: linear-gradient(45deg, #dbeafe, #eff6ff);
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        @media (max-width: 768px) {
+            .timer {
+                top: 5px;
+                right: 5px;
+                font-size: 0.875rem;
+            }
+        }
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .option-label {
+            transition: all 0.2s ease;
+        }
+        .option-label:hover {
+            background-color: #dbeafe !important;
+            border-color: #3b82f6 !important;
+        }
+        .option-label input:checked + .option-content {
+            background-color: #3b82f6 !important;
+            color: white !important;
+        }
+        .warning-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background: white;
+            border: 3px solid #ef4444;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(-2deg); }
+            75% { transform: translate(-50%, -50%) rotate(2deg); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Registration Form Section -->
+    <div id="registrationSection" class="min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md mx-auto">
+            <div class="text-center mb-6 sm:mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">JSIIT</h1>
+                <div class="bg-green-500 text-white px-4 sm:px-6 py-2 rounded-full inline-block mb-4">
+                    <span class="font-semibold text-base sm:text-lg">FREE CERTIFICATE</span>
+                </div>
+                <p class="text-gray-600 text-sm sm:text-base">Enter your details to begin the test</p>
+            </div>
+
+            <form id="registrationForm" class="space-y-4 sm:space-y-6">
+                <div>
+                    <label for="studentName" class="block text-sm font-medium text-gray-700 mb-2">
+                        Student Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="studentName" 
+                        name="studentName"
+                        required
+                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm sm:text-base"
+                        placeholder="Enter your full name"
+                    >
+                </div>
+
+                <div>
+                    <label for="fatherName" class="block text-sm font-medium text-gray-700 mb-2">
+                        Father's Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="fatherName" 
+                        name="fatherName"
+                        required
+                        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm sm:text-base"
+                        placeholder="Enter father's full name"
+                    >
+                </div>
+
+                <button 
+                    type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                >
+                    START TEST
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rules and Regulations Section -->
+    <div id="rulesSection" class="hidden min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-3xl slide-in mx-auto">
+            <div class="text-center mb-6 sm:mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Test Rules & Regulations</h2>
+                <div class="w-16 sm:w-20 h-1 bg-blue-500 mx-auto rounded"></div>
+            </div>
+
+            <div class="space-y-6 text-gray-700">
+                <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+                    <h3 class="font-semibold text-lg mb-3 text-red-800">⏰ Time Limit</h3>
+                    <p class="text-sm">• You have only <strong>15 minutes</strong> to complete the test</p>
+                </div>
+
+                <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500">
+                    <h3 class="font-semibold text-lg mb-3 text-yellow-800">🚫 Strict Restrictions</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>• <strong>NO copy-paste allowed</strong></li>
+                        <li>• <strong>NO tab switching allowed</strong></li>
+                        <li>• Any violation will result in automatic disqualification</li>
+                    </ul>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
+                    <h3 class="font-semibold text-lg mb-3 text-orange-800">🔄 Retake Policy</h3>
+                    <p class="text-sm">• If you fail, you <strong>CANNOT retake</strong> the test without test team permission</p>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500">
+                    <h3 class="font-semibold text-lg mb-3 text-purple-800">📚 Course Completion</h3>
+                    <p class="text-sm">• If we find you didn't watch the full HTML course, you will be <strong>blocked for lifetime</strong> from our platform</p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                    <h3 class="font-semibold text-lg mb-3 text-blue-800">📝 Test Structure</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Total questions: <strong>25 MCQs</strong></li>
+                        <li>• All questions are multiple choice</li>
+                        <li>• Passing marks: <strong>15 out of 25</strong></li>
+                        <li>• No negative marking - wrong answers don't reduce your score</li>
+                    </ul>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                    <h3 class="font-semibold text-lg mb-3 text-green-800">🎓 Certificate</h3>
+                    <p class="text-sm">• Score 15+ marks to get your certificate</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-sm text-gray-600 mb-6 font-medium">
+                    By clicking "YES, I AGREE", you confirm that you have read and understood all rules.
+                </p>
+                <div class="space-y-4">
+                    <button 
+                        type="button"
+                        id="startTestBtn"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-lg"
+                    >
+                        YES, I AGREE - START TEST
+                    </button>
+                    <button 
+                        type="button"
+                        onclick="goBack()"
+                        class="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
+                    >
+                        Go Back to Registration
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Section -->
+    <div id="testSection" class="hidden min-h-screen p-4 sm:p-6">
+        <!-- Timer -->
+        <div class="timer bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg shadow-lg">
+            <div class="text-center">
+                <div class="text-xs sm:text-sm font-medium">Time Remaining</div>
+                <div id="timer" class="text-lg sm:text-xl font-bold">15:00</div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8">
+                <div class="text-center mb-6 sm:mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">HTML Basics Test</h2>
+                    <p class="text-gray-600 text-sm sm:text-base">Answer all 25 questions carefully</p>
+                    <div class="mt-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+                            Question <span id="currentQuestion">1</span> of 25
+                        </span>
+                    </div>
+                </div>
+
+                <div id="questionContainer" class="mb-6 sm:mb-8">
+                    <!-- Questions will be loaded here -->
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
+                    <button 
+                        id="prevBtn"
+                        onclick="previousQuestion()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition duration-200 disabled:opacity-50 text-sm sm:text-base"
+                        disabled
+                    >
+                        Previous
+                    </button>
+                    <button 
+                        id="nextBtn"
+                        onclick="nextQuestion()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 sm:px-6 rounded-lg transition duration-200 text-sm sm:text-base"
+                    >
+                        Next
+                    </button>
+                    <button 
+                        id="submitBtn"
+                        onclick="submitTest()"
+                        class="hidden bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-200 text-sm sm:text-base"
+                    >
+                        Submit Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Section -->
+    <div id="resultSection" class="hidden min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-2xl text-center mx-auto">
+            <div id="resultContent">
+                <!-- Result will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Section -->
+    <div id="certificateSection" class="hidden min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div class="certificate rounded-2xl p-4 sm:p-8 w-full max-w-7xl text-center mx-auto" style="aspect-ratio: 16/9;">
+            <div class="certificate-border rounded-xl p-4 sm:p-8 relative overflow-hidden h-full flex flex-col justify-between" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #bae6fd 50%, #7dd3fc 75%, #38bdf8 100%); border: 6px solid #0369a1; box-shadow: inset 0 0 50px rgba(3, 105, 161, 0.1);"
+                <!-- Decorative elements -->
+                <div class="absolute top-4 left-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
+                <div class="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
+                <div class="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
+                <div class="absolute bottom-4 right-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full opacity-20"></div>
+                
+                <!-- Decorative border pattern -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent"></div>
+                
+                <!-- Certificate Header -->
+                <div class="relative z-10">
+                    <div class="flex justify-center items-center mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center mr-3 shadow-lg">
+                            <span class="text-white text-xl font-bold">🎓</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-blue-800 to-blue-600 bg-clip-text text-transparent">JSIIT</h1>
+                    </div>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-3"></div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-700 mb-1">Certificate of Completion</h2>
+                    <p class="text-xs text-gray-500 uppercase tracking-wider">HTML Basic Course</p>
+                </div>
+                
+                <!-- Certificate Body -->
+                <div class="relative z-10 flex-1 flex flex-col justify-center px-4">
+                    <p class="text-base sm:text-lg text-gray-600 mb-4 italic">This is to certify that</p>
+                    <div class="bg-white bg-opacity-80 p-4 rounded-lg mb-4 shadow-lg border border-blue-200">
+                        <h3 id="certStudentName" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2"></h3>
+                        <p id="certFatherName" class="text-base sm:text-lg text-gray-600"></p>
+                    </div>
+                    <p class="text-sm sm:text-base text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                        has successfully completed the <strong>HTML Basic Course</strong> and demonstrated proficiency in fundamental web development concepts through comprehensive assessment.
+                    </p>
+                </div>
+
+                <!-- Certificate Footer -->
+                <div class="relative z-10">
+                    <div class="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-blue-300">
+                        <div class="text-center mb-2 sm:mb-0">
+                            <p class="text-lg font-bold text-gray-800">JSIIT</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600 font-medium">Date of Completion</p>
+                            <p id="certDate" class="text-base font-bold text-gray-800"></p>
+                        </div>
+                    </div>
+
+                    <!-- Certificate ID and Website -->
+                    <div class="mt-3 text-center">
+                        <p class="text-xs text-gray-500">Certificate ID: <span id="certId" class="font-mono"></span></p>
+                        <p class="text-sm text-blue-600 mt-2 font-medium">https://jsiit.eshwarkingrani.com</p>
+                        <p class="text-xs text-gray-400 mt-2 italic">This is computerized certificate, signature not needed</p>
+                    </div>
+                </div>
+
+                <!-- Download Options -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <button 
+                        onclick="showDownloadOptions()"
+                        class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                    >
+                        📥 Download Certificate
+                    </button>
+                    <button 
+                        onclick="goHome()"
+                        class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 text-sm sm:text-base"
+                    >
+                        🏠 Go Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Options Modal -->
+    <div id="downloadModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-md mx-auto">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Choose Download Format</h3>
+                <p class="text-gray-600">Select your preferred format to download the certificate</p>
+            </div>
+            
+            <div class="space-y-4">
+                <button 
+                    onclick="downloadCertificate('pdf')"
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center"
+                >
+                    <span class="text-2xl mr-3">📄</span>
+                    <div class="text-left">
+                        <div class="font-bold">PDF Format</div>
+                        <div class="text-sm opacity-90">Best for printing and official use</div>
+                    </div>
+                </button>
+                
+                <button 
+                    onclick="downloadCertificate('jpeg')"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center"
+                >
+                    <span class="text-2xl mr-3">🖼️</span>
+                    <div class="text-left">
+                        <div class="font-bold">JPEG Format</div>
+                        <div class="text-sm opacity-90">Perfect for sharing on social media</div>
+                    </div>
+                </button>
+            </div>
+            
+            <button 
+                onclick="closeDownloadModal()"
+                class="w-full mt-6 bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
+            >
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Student information and test data
+        let studentInfo = {};
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let timeRemaining = 15 * 60; // 15 minutes in seconds
+        let timerInterval;
+
+        // Questions array with correct answers marked
+        const questions = [
+            {
+                question: "Which tag defines the main visible content of an HTML page?",
+                options: ["head", "body", "title", "p"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used for the largest heading in HTML?",
+                options: ["h6", "h1", "title", "head"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to insert a line break?",
+                options: ["p", "hr", "br", "u"],
+                correct: 2
+            },
+            {
+                question: "Which tag is used to create bold text?",
+                options: ["i", "b", "u", "p"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to create italic text?",
+                options: ["b", "p", "i", "u"],
+                correct: 2
+            },
+            {
+                question: "Which tag is used to create an underline?",
+                options: ["i", "u", "br", "b"],
+                correct: 1
+            },
+            {
+                question: "Which tag defines a hyperlink?",
+                options: ["link", "a", "img", "hr"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to insert an image?",
+                options: ["a", "img", "pic", "br"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used for an ordered list?",
+                options: ["ul", "ol", "li", "table"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used for a table row?",
+                options: ["th", "td", "tr", "table"],
+                correct: 2
+            },
+            {
+                question: "Which tag is used to create a paragraph in HTML?",
+                options: ["para", "p", "pr", "h1"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to display a horizontal line?",
+                options: ["hr", "line", "br", "border"],
+                correct: 0
+            },
+            {
+                question: "Inside which tag do we put the title of the webpage (visible in the browser tab)?",
+                options: ["h1", "head", "title", "p"],
+                correct: 2
+            },
+            {
+                question: "Which tag is used for a table header cell?",
+                options: ["th", "td", "tr", "table"],
+                correct: 0
+            },
+            {
+                question: "Which attribute is required in input type email for form validation?",
+                options: ["placeholder", "name", "email", "required"],
+                correct: 3
+            },
+            {
+                question: "Which input type hides the characters typed by the user?",
+                options: ["text", "password", "hidden", "email"],
+                correct: 1
+            },
+            {
+                question: "Which HTML element is used to group a label with its corresponding input?",
+                options: ["p", "label", "input", "fieldset"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to define a list item?",
+                options: ["li", "ul", "ol", "list"],
+                correct: 0
+            },
+            {
+                question: "Which tag is the root element of an HTML document?",
+                options: ["html", "head", "body", "title"],
+                correct: 0
+            },
+            {
+                question: "Which tag is used to store information about the page but not displayed on the webpage?",
+                options: ["body", "p", "head", "h1"],
+                correct: 2
+            },
+            {
+                question: "Which tag is used to create a list with bullets?",
+                options: ["ul", "ol", "li", "tr"],
+                correct: 0
+            },
+            {
+                question: "Which tag is used to enter text in a form?",
+                options: ["input type text", "label", "p", "form"],
+                correct: 0
+            },
+            {
+                question: "Which tag is used to make a table in HTML?",
+                options: ["tr", "td", "table", "th"],
+                correct: 2
+            },
+            {
+                question: "Which attribute of input makes a field mandatory?",
+                options: ["checked", "required", "value", "readonly"],
+                correct: 1
+            },
+            {
+                question: "Which tag is used to display content on the browser screen?",
+                options: ["body", "head", "html", "title"],
+                correct: 0
+            }
+        ];
+
+        // Handle registration form
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const studentName = document.getElementById('studentName').value.trim();
+            const fatherName = document.getElementById('fatherName').value.trim();
+            
+            if (!studentName || !fatherName) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            studentInfo = {
+                studentName: studentName,
+                fatherName: fatherName,
+                registrationTime: new Date().toLocaleString()
+            };
+            
+            showRulesSection();
+        });
+
+        // Add event listener for start test button when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const startTestBtn = document.getElementById('startTestBtn');
+            if (startTestBtn) {
+                startTestBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Start test button clicked');
+                    startTest();
+                    return false;
+                });
+            }
+        });
+
+        function showRulesSection() {
+            document.getElementById('registrationSection').classList.add('hidden');
+            document.getElementById('rulesSection').classList.remove('hidden');
+        }
+
+        function goBack() {
+            document.getElementById('rulesSection').classList.add('hidden');
+            document.getElementById('registrationSection').classList.remove('hidden');
+        }
+
+        function startTest() {
+            try {
+                console.log('Starting test...');
+                
+                // Hide rules section
+                const rulesSection = document.getElementById('rulesSection');
+                const testSection = document.getElementById('testSection');
+                
+                if (rulesSection && testSection) {
+                    rulesSection.classList.add('hidden');
+                    testSection.classList.remove('hidden');
+                    
+                    console.log('Sections switched successfully');
+                    
+                    // Start timer
+                    startTimer();
+                    
+                    // Load first question
+                    loadQuestion();
+                    
+                    // Disable right-click and keyboard shortcuts
+                    disableCheating();
+                    
+                    console.log('Test started successfully');
+                } else {
+                    console.error('Could not find required sections');
+                    alert('Error: Could not start test. Please refresh the page and try again.');
+                }
+            } catch (error) {
+                console.error('Error starting test:', error);
+                alert('Error starting test: ' + error.message);
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeRemaining--;
+                
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        let tabSwitchCount = 0;
+        let copyAttempts = 0;
+
+        function disableCheating() {
+            // Disable right-click
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showWarning('Right-click is disabled during the test!', 'warning');
+            });
+
+            // Disable copy-paste and other shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'a' || e.key === 's')) {
+                    e.preventDefault();
+                    copyAttempts++;
+                    
+                    if (copyAttempts >= 3) {
+                        showWarning('Multiple copy attempts detected! Test will be terminated.', 'danger');
+                        setTimeout(() => {
+                            submitTest();
+                        }, 3000);
+                    } else {
+                        showWarning(`Copy-paste is not allowed! Warning ${copyAttempts}/3`, 'warning');
+                    }
+                }
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                    e.preventDefault();
+                    showWarning('Developer tools are not allowed during the test!', 'warning');
+                }
+            });
+
+            // Detect tab switching - STRICT MODE (only during test)
+            document.addEventListener('visibilitychange', function() {
+                // Only check for tab switching if we're in the test section
+                const testSection = document.getElementById('testSection');
+                const isTestActive = testSection && !testSection.classList.contains('hidden');
+                
+                if (document.hidden && isTestActive) {
+                    tabSwitchCount++;
+                    
+                    if (tabSwitchCount >= 2) {
+                        showWarning('Tab switching detected multiple times! Test terminated.', 'danger');
+                        setTimeout(() => {
+                            clearInterval(timerInterval);
+                            showResult(0); // Automatic fail
+                        }, 3000);
+                    } else {
+                        showWarning('Tab switching detected! One more violation will terminate the test.', 'danger');
+                    }
+                }
+            });
+
+            // Disable text selection
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+            });
+
+            // Disable drag
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+            });
+        }
+
+        function showWarning(message, type) {
+            // Remove existing warning
+            const existingWarning = document.querySelector('.warning-popup');
+            if (existingWarning) {
+                existingWarning.remove();
+            }
+
+            const warning = document.createElement('div');
+            warning.className = 'warning-popup';
+            warning.innerHTML = `
+                <div class="text-center">
+                    <div class="text-4xl mb-4">${type === 'danger' ? '🚨' : '⚠️'}</div>
+                    <h3 class="text-xl font-bold ${type === 'danger' ? 'text-red-600' : 'text-yellow-600'} mb-4">
+                        ${type === 'danger' ? 'VIOLATION DETECTED' : 'WARNING'}
+                    </h3>
+                    <p class="text-gray-700 mb-4">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            class="bg-${type === 'danger' ? 'red' : 'yellow'}-600 hover:bg-${type === 'danger' ? 'red' : 'yellow'}-700 text-white px-6 py-2 rounded-lg font-semibold">
+                        I UNDERSTAND
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(warning);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (warning.parentElement) {
+                    warning.remove();
+                }
+            }, 5000);
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            const questionContainer = document.getElementById('questionContainer');
+            
+            questionContainer.innerHTML = `
+                <div class="question-card bg-gray-50 p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-gray-800 leading-relaxed">
+                        Q${currentQuestionIndex + 1}. ${question.question}
+                    </h3>
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="option-label flex items-start p-3 sm:p-4 bg-white rounded-lg border-2 border-gray-200 cursor-pointer transition duration-200 hover:shadow-md">
+                                <input type="radio" name="question${currentQuestionIndex}" value="${index}" 
+                                       class="mt-1 mr-3 text-blue-600 focus:ring-2 focus:ring-blue-500" 
+                                       ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}
+                                       onchange="saveAnswer(${currentQuestionIndex}, ${index})">
+                                <div class="option-content flex-1 text-sm sm:text-base">
+                                    <span class="font-semibold text-blue-600 mr-2">${String.fromCharCode(65 + index)})</span>
+                                    <span class="text-gray-700">&lt;${option}&gt;</span>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Update question counter
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                document.getElementById('nextBtn').classList.add('hidden');
+                document.getElementById('submitBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('nextBtn').classList.remove('hidden');
+                document.getElementById('submitBtn').classList.add('hidden');
+            }
+        }
+
+        function saveAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            let score = 0;
+            
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            // Ensure score doesn't go below 0
+            score = Math.max(0, score);
+            
+            showResult(score);
+        }
+
+        function showResult(score) {
+            document.getElementById('testSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+            
+            const resultContent = document.getElementById('resultContent');
+            const isPassed = score >= 15;
+            
+            if (isPassed) {
+                resultContent.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-4xl sm:text-6xl mb-4">🎉</div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-green-600 mb-4">Congratulations!</h2>
+                        <p class="text-lg sm:text-xl text-gray-700 mb-6">You have successfully passed the test!</p>
+                        <div class="bg-green-50 p-4 sm:p-6 rounded-lg mb-6">
+                            <p class="text-base sm:text-lg font-semibold text-green-800">Your Score: ${score.toFixed(1)} / 25</p>
+                            <p class="text-green-700 mt-2">Result: <span class="font-bold">PASS</span></p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                            <button 
+                                onclick="showCertificate()"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 sm:px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                            >
+                                Download Certificate
+                            </button>
+                            <button 
+                                onclick="goHome()"
+                                class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 sm:px-8 rounded-lg transition duration-200 text-sm sm:text-base"
+                            >
+                                Go Home
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultContent.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-4xl sm:text-6xl mb-4">😞</div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-red-600 mb-4">Sorry, Try Again</h2>
+                        <p class="text-lg sm:text-xl text-gray-700 mb-6">You need to score at least 15 marks to pass.</p>
+                        <div class="bg-red-50 p-4 sm:p-6 rounded-lg mb-6">
+                            <p class="text-base sm:text-lg font-semibold text-red-800">Your Score: ${score.toFixed(1)} / 25</p>
+                            <p class="text-red-700 mt-2">Result: <span class="font-bold">FAIL</span></p>
+                        </div>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-6">
+                            Contact the test team for permission to retake the test.
+                        </p>
+                        <button 
+                            onclick="goHome()"
+                            class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 sm:px-8 rounded-lg transition duration-200 text-sm sm:text-base"
+                        >
+                            Go Home
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function showCertificate() {
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('certificateSection').classList.remove('hidden');
+            
+            // Fill certificate details
+            document.getElementById('certStudentName').textContent = studentInfo.studentName;
+            document.getElementById('certFatherName').textContent = `S/O ${studentInfo.fatherName}`;
+            document.getElementById('certDate').textContent = new Date().toLocaleDateString();
+            
+            // Generate unique certificate ID
+            const certId = 'JSIIT-' + Date.now().toString().slice(-8) + '-HTML';
+            document.getElementById('certId').textContent = certId;
+        }
+
+        function showDownloadOptions() {
+            document.getElementById('downloadModal').classList.remove('hidden');
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.add('hidden');
+        }
+
+        function downloadCertificate(format) {
+            closeDownloadModal();
+            
+            if (format === 'pdf') {
+                // Generate PDF certificate
+                generatePDFCertificate();
+            } else if (format === 'jpeg') {
+                // Generate JPEG certificate
+                generateJPEGCertificate();
+            }
+        }
+
+        function generatePDFCertificate() {
+            // Create a new window with certificate content for PDF generation
+            const certificateContent = document.querySelector('#certificateSection .certificate-border').cloneNode(true);
+            
+            // Create a new window for PDF generation
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>JSIIT Certificate - ${studentInfo.studentName}</title>
+                    <style>
+                        body { 
+                            font-family: 'Arial', sans-serif; 
+                            margin: 0; 
+                            padding: 20px;
+                            background: white;
+                        }
+                        .certificate-border {
+                            max-width: 800px;
+                            margin: 0 auto;
+                            padding: 40px;
+                            border: 4px solid #2563eb;
+                            border-radius: 12px;
+                            background: linear-gradient(45deg, #dbeafe, #eff6ff);
+                            position: relative;
+                        }
+                        .absolute { position: absolute; }
+                        .top-0 { top: 0; }
+                        .left-0 { left: 0; }
+                        .right-0 { right: 0; }
+                        .bottom-0 { bottom: 0; }
+                        .w-20 { width: 80px; }
+                        .h-20 { height: 80px; }
+                        .border-l-4 { border-left: 4px solid #2563eb; }
+                        .border-r-4 { border-right: 4px solid #2563eb; }
+                        .border-t-4 { border-top: 4px solid #2563eb; }
+                        .border-b-4 { border-bottom: 4px solid #2563eb; }
+                        h1 { color: #1e40af; font-size: 48px; margin: 0; }
+                        h2 { color: #374151; font-size: 24px; margin: 10px 0; }
+                        h3 { color: #1f2937; font-size: 32px; margin: 10px 0; }
+                        .text-center { text-align: center; }
+                        .mb-4 { margin-bottom: 16px; }
+                        .mb-6 { margin-bottom: 24px; }
+                        .mb-8 { margin-bottom: 32px; }
+                        .mt-12 { margin-top: 48px; }
+                        .pt-6 { padding-top: 24px; }
+                        .px-4 { padding-left: 16px; padding-right: 16px; }
+                        .border-t-2 { border-top: 2px solid #e5e7eb; }
+                        .flex { display: flex; }
+                        .justify-between { justify-content: space-between; }
+                        .items-center { align-items: center; }
+                        @media print {
+                            body { margin: 0; }
+                            .certificate-border { border: 4px solid #2563eb !important; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${certificateContent.outerHTML}
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            
+            // Wait for content to load then trigger print
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 1000);
+            
+            // Show success message
+            setTimeout(() => {
+                alert(`📄 PDF Certificate generated successfully!\n\nCertificate for: ${studentInfo.studentName}\nFormat: PDF\n\nThe print dialog has opened. You can save as PDF or print directly.`);
+            }, 500);
+        }
+
+        function generateJPEGCertificate() {
+            // Use html2canvas library simulation for JPEG generation
+            const certificateElement = document.querySelector('#certificateSection .certificate-border');
+            
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = 1200;
+            canvas.height = 800;
+            
+            // Fill background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add border
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            // Add text content
+            ctx.fillStyle = '#1e40af';
+            ctx.font = 'bold 60px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('JSIIT', canvas.width / 2, 120);
+            
+            ctx.fillStyle = '#374151';
+            ctx.font = 'bold 32px Arial';
+            ctx.fillText('Certificate of Completion', canvas.width / 2, 180);
+            
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '20px Arial';
+            ctx.fillText('HTML Basic Course', canvas.width / 2, 210);
+            
+            ctx.fillStyle = '#4b5563';
+            ctx.font = '24px Arial';
+            ctx.fillText('This is to certify that', canvas.width / 2, 280);
+            
+            ctx.fillStyle = '#1f2937';
+            ctx.font = 'bold 40px Arial';
+            ctx.fillText(studentInfo.studentName, canvas.width / 2, 340);
+            
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '24px Arial';
+            ctx.fillText(`S/O ${studentInfo.fatherName}`, canvas.width / 2, 380);
+            
+            ctx.fillStyle = '#374151';
+            ctx.font = '22px Arial';
+            const text = 'has successfully completed the HTML Basic Course and demonstrated';
+            ctx.fillText(text, canvas.width / 2, 450);
+            ctx.fillText('proficiency in fundamental web development concepts', canvas.width / 2, 480);
+            
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '18px Arial';
+            ctx.fillText('Date: ' + new Date().toLocaleDateString(), canvas.width - 200, canvas.height - 100);
+            
+            ctx.fillText('JSIIT Team', 200, canvas.height - 100);
+            
+            ctx.fillStyle = '#2563eb';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('https://jsiit.eshwarkingrani.com', canvas.width / 2, canvas.height - 60);
+            
+            ctx.fillStyle = '#9ca3af';
+            ctx.font = '14px Arial';
+            ctx.fillText('This is computerized certificate, signature not needed', canvas.width / 2, canvas.height - 30);
+            
+            // Convert canvas to blob and download
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `JSIIT_Certificate_${studentInfo.studentName.replace(/\s+/g, '_')}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Show success message
+                alert(`🖼️ JPEG Certificate downloaded successfully!\n\nCertificate for: ${studentInfo.studentName}\nFormat: JPEG Image\nFile saved to your Downloads folder.`);
+            }, 'image/jpeg', 0.9);
+        }
+
+        function goHome() {
+            // Reset all variables
+            studentInfo = {};
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            timeRemaining = 15 * 60;
+            tabSwitchCount = 0;
+            copyAttempts = 0;
+            
+            // Clear timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // Hide all sections except registration
+            document.getElementById('rulesSection').classList.add('hidden');
+            document.getElementById('testSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('certificateSection').classList.add('hidden');
+            document.getElementById('registrationSection').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('registrationForm').reset();
+            
+            // Remove any existing warnings
+            const existingWarning = document.querySelector('.warning-popup');
+            if (existingWarning) {
+                existingWarning.remove();
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978f6b2134e49075',t:'MTc1Njg0MTM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
